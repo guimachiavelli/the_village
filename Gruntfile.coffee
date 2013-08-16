@@ -29,7 +29,7 @@ module.exports = (grunt) ->
 
 			mocha: {
 				files: 'test/*.coffee'
-				tasks: 'mocha-watcher'
+				tasks: 'test-watch'
 			}
 		}
 		
@@ -83,12 +83,12 @@ module.exports = (grunt) ->
 	}
 
 	grunt.registerTask 'default', 'Log some stuff.', ->
-		grunt.log.write('tasks: coffee, watch, test').ok()
+		grunt.log.write('available tasks: coffee, watch, test, test-watch')
 
 
 	grunt.registerTask 'coffee', ['coffee']
-	grunt.registerTask 'mocha', ['mochacli:single']
-	grunt.registerTask 'mocha-watcher', ['mochacli:watching']
+	grunt.registerTask 'test', ['mochacli:single']
+	grunt.registerTask 'test-watch', ['mochacli:watching']
 
 	grunt.loadNpmTasks 'grunt-contrib-coffee'
 	grunt.loadNpmTasks 'grunt-mocha-cli'
