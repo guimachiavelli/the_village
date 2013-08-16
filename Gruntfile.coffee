@@ -39,7 +39,7 @@ module.exports = (grunt) ->
 					join: true
 					basePath: 'src/coffee'
 				}
-				src: ['src/coffee/elements.coffee', 'src/coffee/person.coffee', 'src/coffee/tile.coffee', 'src/coffee/building.coffee', 'src/coffee/stage.coffee' ]
+				src: ['src/coffee/elements.coffee', 'src/coffee/person.coffee', 'src/coffee/tile.coffee', 'src/coffee/building.coffee', 'src/coffee/world.coffee' ]
 				dest: 'js/main.js'
 			}
 		}
