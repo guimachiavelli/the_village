@@ -1,5 +1,8 @@
 class World
 	constructor: (@name, @width, @height) ->
+		throw 'invalid width' if @width < 1
+		throw 'invalid height' if @height < 1
+
 		@turnCounter = 0
 		@matrix = []
 		@stage = []

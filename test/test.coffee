@@ -1,7 +1,6 @@
 chai = require 'chai'
 sinon = require 'sinon'
 
-
 chai.should()
 expect = chai.expect
 
@@ -12,6 +11,13 @@ clock = sinon.useFakeTimers()
 
 
 describe 'world structure', ->
+
+	it 'should have a height bigger than 0', ->
+		(-> world = new World 'world', 1, 0).should.throw 'invalid height'
+
+	it 'should have a width bigger than 0', ->
+		(-> world = new World 'world', 0, 1).should.throw 'invalid width'
+		
 
 	it 'should count how many turns have passed', ->
 		world = new World 'world', 5, 5
@@ -133,3 +139,13 @@ describe 'characters', ->
 			it 'should move a character west', ->
 				char1.move('x', '-')
 				char1.position.should.deep.equal [0,0]
+
+
+# next:
+#
+# buildings
+# interactions -> bass talks to viola when they're on adjacent positions
+# tiles -> water should not be walkable
+#
+# exceptions:
+# 
