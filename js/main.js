@@ -94,7 +94,12 @@
       this.position = position;
       this.symbol = symbol;
       this.world = world;
+      this.init();
     }
+
+    Person.prototype.init = function() {
+      return this.addToGrid(this.position, this, 'person', true);
+    };
 
     Person.prototype.move = function(axis, direction, distance) {
       var previous;
@@ -136,10 +141,6 @@
         this.world.matrix[previous[0]][previous[1]].person = '';
         this.world.matrix[previous[0]][previous[1]].occupied = false;
       }
-      return this.addToGrid(this.position, this, 'person', true);
-    };
-
-    Person.prototype.initialize = function() {
       return this.addToGrid(this.position, this, 'person', true);
     };
 

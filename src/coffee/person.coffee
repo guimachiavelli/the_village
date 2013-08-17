@@ -1,5 +1,9 @@
 class Person extends Element
 	constructor: (@name, @position, @symbol, @world) ->
+		@init()
+
+	init: () ->
+		@addToGrid @position, @, 'person', true
 
 	move: (axis, direction, distance) ->
 		
@@ -39,9 +43,6 @@ class Person extends Element
 		
 		@addToGrid @position, @, 'person', true
 	
-	initialize: () ->
-		@addToGrid @position, @, 'person', true
-		#setTimeout @behaviour, 2000
 
 	act: (test) ->
 		test = Math.floor(Math.random() * 4) if test == ''
