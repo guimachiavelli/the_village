@@ -28,7 +28,7 @@ module.exports = (grunt) ->
 			}
 
 			mocha: {
-				files: 'test/*.coffee'
+				files: ['test/*.coffee', 'js/*.js']
 				tasks: 'test-watch'
 			}
 		}
