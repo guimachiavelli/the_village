@@ -27,6 +27,9 @@ class Person extends Element
 		
 
 		if @checkBounds(@position)? then @position = previous
+
+		if @world.matrix[@position[0]][@position[1]].tile.name is 'deep water'
+			@position = previous
 		
 		if @world.matrix[@position[0]][@position[1]].occupied is true
 			@position = previous
