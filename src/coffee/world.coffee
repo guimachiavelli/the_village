@@ -7,9 +7,11 @@ class World
 		@matrix = []
 		@stage = []
 
+		@init()
+
 	speed: 1
 
-	initialize: () ->
+	init: () ->
 		for [0...@height]
 			@matrix.push []
 		for row, i in @matrix
@@ -19,6 +21,21 @@ class World
 					"person" : '',
 					"occupied" : false
 				}
+	
+	# set the fundamental structure of the world
+	# meaning, populates the tiles with diverse types of terrain
+	createTheSea: (size) ->
+		margin = Math.floor(size/2)
+		
+		while size >= 0
+			for column, c in @matrix[size]
+				if size - margin > 0
+					@matrix[size][c].tile = shallow_water
+				else
+					@matrix[size][c].tile = deep_water
+			size--
+	
+
 	run: (stop) ->
 		_that = @
 		if stop is false

@@ -1,9 +1,14 @@
 class Tile extends Element
-	constructor: (@name, @symbol, @color) ->
+	constructor: (@name, @symbol) ->
 
-grass = new Tile('grass', '.', '#0d9')
-water = new Tile('water', '.', '#000bff')
-tree = new Tile('tree', '&', '#0fb')
+class Water extends Tile
+	constructor: (@name, @symbol, @deep) ->
+	
+
+grass = new Tile 'grass', '.'
+shallow_water = new Water 'water', '.', false
+deep_water = new Water 'deep water', '.', true
+tree = new Tile 'tree', '&'
 
 root = exports ? window
 root.Tile = Tile
