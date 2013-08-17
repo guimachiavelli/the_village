@@ -1,5 +1,5 @@
 (function() {
-  var Building, Element, Person, Tile, World, grass, root, tree, water,
+  var Building, Element, Person, Tile, Water, World, deep_water, grass, root, shallow_water, tree,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -127,6 +127,9 @@
       if (this.checkBounds(this.position) != null) {
         this.position = previous;
       }
+      if (this.world.matrix[this.position[0]][this.position[1]].tile.name === 'deep water') {
+        this.position = previous;
+      }
       if (this.world.matrix[this.position[0]][this.position[1]].occupied === true) {
         this.position = previous;
       } else {
@@ -167,21 +170,35 @@
   Tile = (function(_super) {
     __extends(Tile, _super);
 
-    function Tile(name, symbol, color) {
+    function Tile(name, symbol) {
       this.name = name;
       this.symbol = symbol;
-      this.color = color;
     }
 
     return Tile;
 
   })(Element);
 
-  grass = new Tile('grass', '.', '#0d9');
+  Water = (function(_super) {
+    __extends(Water, _super);
 
-  water = new Tile('water', '.', '#000bff');
+    function Water(name, symbol, deep) {
+      this.name = name;
+      this.symbol = symbol;
+      this.deep = deep;
+    }
 
-  tree = new Tile('tree', '&', '#0fb');
+    return Water;
+
+  })(Tile);
+
+  grass = new Tile('grass', '.');
+
+  shallow_water = new Water('water', '.', false);
+
+  deep_water = new Water('deep water', '.', true);
+
+  tree = new Tile('tree', '&');
 
   root = typeof exports !== "undefined" && exports !== null ? exports : window;
 
@@ -203,14 +220,21 @@
       this.name = name;
       this.width = width;
       this.height = height;
+      if (this.width < 1) {
+        throw 'invalid width';
+      }
+      if (this.height < 1) {
+        throw 'invalid height';
+      }
       this.turnCounter = 0;
       this.matrix = [];
       this.stage = [];
+      this.init();
     }
 
     World.prototype.speed = 1;
 
-    World.prototype.initialize = function() {
+    World.prototype.init = function() {
       var i, row, _i, _j, _len, _ref, _ref1, _results;
       for (_i = 0, _ref = this.height; 0 <= _ref ? _i < _ref : _i > _ref; 0 <= _ref ? _i++ : _i--) {
         this.matrix.push([]);
@@ -231,6 +255,25 @@
           }
           return _results1;
         }).call(this));
+      }
+      return _results;
+    };
+
+    World.prototype.createTheSea = function(size) {
+      var c, column, margin, _i, _len, _ref, _results;
+      margin = Math.floor(size / 2);
+      _results = [];
+      while (size >= 0) {
+        _ref = this.matrix[size];
+        for (c = _i = 0, _len = _ref.length; _i < _len; c = ++_i) {
+          column = _ref[c];
+          if (size - margin > 0) {
+            this.matrix[size][c].tile = shallow_water;
+          } else {
+            this.matrix[size][c].tile = deep_water;
+          }
+        }
+        _results.push(size--);
       }
       return _results;
     };
