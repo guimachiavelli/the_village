@@ -1,9 +1,13 @@
 class Person extends Element
 	constructor: (@name, @position, @symbol, @world) ->
+		@view = null
 		@init()
 
 	init: () ->
 		@addToGrid @position, @, 'person', true
+
+	look: () ->
+		@view = @surroundings 2
 
 	move: (axis, direction, distance) ->
 		

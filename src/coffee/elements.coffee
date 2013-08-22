@@ -1,3 +1,6 @@
+#teste
+#
+
 class Element
 	constructor: (@world) ->
 	
@@ -15,9 +18,6 @@ class Element
 			return false
 		else if not @world.matrix[the_position[0]][the_position[1]]?
 			return false
-	
-	act: () ->
-		return true
 
 	defineArea: (position, radius) ->
 		if position.length > 2 then return undefined
@@ -51,8 +51,32 @@ class Element
 			i++
 		return around
 
-	surroundings: () ->
-		@defineArea @position, 1
+	defineArea2: (position, radius) ->
+		around = []
+		coord = []
+		i = 1
+
+		while radius > 0
+			coord = [
+				[position[0], position[1] + radius]
+				[position[0] + radius, position[1]]
+				[position[0], position[1] - radius]
+				[position[0] - radius, position[1]]
+			]
+			
+			if radius > 1
+				coord.push [position[0] + radius - i, position[1] + radius], [position[0] + radius, position[1] + radius - i], [position[0] + radius - i, position[1] - radius], [position[0] - radius, position[1] + radius - i]
+
+			for pos in coord
+				around.push @world.matrix[pos[0]][pos[1]] if @world.matrix[pos[0]]? and @world.matrix[pos[0]][pos[1]]?
+
+			radius--
+
+		return around
+
+
+	surroundings: (area) ->
+		@defineArea2 @position, area
 		
 	
 

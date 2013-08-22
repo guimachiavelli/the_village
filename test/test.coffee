@@ -69,22 +69,41 @@ describe 'world fixtures:', ->
 		char1.position.should.deep.equal [3,1]
 	
 		
-describe 'characters', ->
+describe 'persons', ->
 
-	it 'should create a character and add it to the stage', ->
+	it 'init() and constructor should create a character and add it to the stage', ->
 		world = new World 'world', 5, 5
 		char1 = new Person 'bass', [0, 0], '@', world
 		
 		world.matrix[0][0].person.name.should.equal 'bass'
 		world.matrix[0][0].person.symbol.should.equal '@'
 	
-	it 'characters should set their position in the stage to occupied', ->
+	it 'should set their position in the stage to occupied', ->
 		world = new World 'world', 5, 5
 		char1 = new Person 'bass', [0, 0], '@', world
 
 		world.matrix[0][0].occupied.should.equal true
 	
-	describe 'movement', ->
+	it 'look() should return a view of their surroundings', ->
+		world = new World 'world', 10, 10
+		char1 = new Person 'bass', [4, 3], '@', world
+		char2 = new Person 'viola', [0, 3], '#', world
+		char3 = new Person 'piano', [0, 2], '$', world
+
+		char1.look()
+		char2.look()
+		char3.look()
+		
+		char1.view.length.should.equal 12
+		char1.view[0].tile.name.should.equal 'grass'
+		char1.view.should.not.be.empty
+
+		char2.view.length.should.equal 9
+	
+		char3.view[6].person.name.should.equal 'viola'
+
+	
+	describe 'move', ->
 
 		it 'should occupy and vacate positions when moving', ->
 			world = new World 'world', 5, 5
@@ -154,7 +173,6 @@ describe 'characters', ->
 #
 # buildings
 # interactions -> bass talks to viola when they're on adjacent positions
-# tiles -> water should not be walkable
 #
 # exceptions:
 # 

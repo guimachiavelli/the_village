@@ -25,10 +25,6 @@
       }
     };
 
-    Element.prototype.act = function() {
-      return true;
-    };
-
     Element.prototype.defineArea = function(position, radius) {
       var around, column_length, i, row_length, x_current, x_max_length, x_min_length, y_current, y_max_length, y_min_length;
       if (position.length > 2) {
@@ -74,8 +70,29 @@
       return around;
     };
 
-    Element.prototype.surroundings = function() {
-      return this.defineArea(this.position, 1);
+    Element.prototype.defineArea2 = function(position, radius) {
+      var around, coord, i, pos, _i, _len;
+      around = [];
+      coord = [];
+      i = 1;
+      while (radius > 0) {
+        coord = [[position[0], position[1] + radius], [position[0] + radius, position[1]], [position[0], position[1] - radius], [position[0] - radius, position[1]]];
+        if (radius > 1) {
+          coord.push([position[0] + radius - i, position[1] + radius], [position[0] + radius, position[1] + radius - i], [position[0] + radius - i, position[1] - radius], [position[0] - radius, position[1] + radius - i]);
+        }
+        for (_i = 0, _len = coord.length; _i < _len; _i++) {
+          pos = coord[_i];
+          if ((this.world.matrix[pos[0]] != null) && (this.world.matrix[pos[0]][pos[1]] != null)) {
+            around.push(this.world.matrix[pos[0]][pos[1]]);
+          }
+        }
+        radius--;
+      }
+      return around;
+    };
+
+    Element.prototype.surroundings = function(area) {
+      return this.defineArea2(this.position, area);
     };
 
     return Element;
@@ -94,11 +111,16 @@
       this.position = position;
       this.symbol = symbol;
       this.world = world;
+      this.view = null;
       this.init();
     }
 
     Person.prototype.init = function() {
       return this.addToGrid(this.position, this, 'person', true);
+    };
+
+    Person.prototype.look = function() {
+      return this.view = this.surroundings(2);
     };
 
     Person.prototype.move = function(axis, direction, distance) {
