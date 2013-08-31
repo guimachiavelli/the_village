@@ -7,7 +7,7 @@ expect = chai.expect
 clock = sinon.useFakeTimers()
 
 
-{ Element, Tile, Person, World } = require '../js/main.js'
+{ Element, Tile, Person, World } = require '../lib/js/main.js'
 
 
 describe 'world structure:', ->

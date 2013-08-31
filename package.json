@@ -2,8 +2,9 @@
   "name": "the-village",
   "version": "0.0.1",
   "private": true,
-  "devDependencies": {
+  "dependencies": {
     "mocha": "1.12.0",
+    "ejs": "~0.8.4",
     "sinon": "~1.7.3",
     "grunt": "~0.4.1",
     "grunt-contrib-coffee": "~0.7.0",
