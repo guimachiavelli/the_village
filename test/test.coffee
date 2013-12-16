@@ -6,9 +6,10 @@ expect = chai.expect
 
 clock = sinon.useFakeTimers()
 
-
-{ Element, Tile, Person, World } = require '../lib/js/main.js'
-
+Element = require '../lib/src/coffee/elements.coffee'
+Tile = require '../lib/src/coffee/tile.coffee'
+Person = require '../lib/src/coffee/person.coffee'
+World = require '../lib/src/coffee/world.coffee'
 
 describe 'world structure:', ->
 	
@@ -48,13 +49,14 @@ describe 'world structure:', ->
 
 		it 'should pass 10 turns', ->
 			world = new World 'world', 5, 5
-			pass = world.speed * 10
+			number_of_turns = 10
+			pass = world.speed * number_of_turns
 
 			world.run(false)
 			clock.tick pass
 			world.run(true)
 
-			world.turnCounter.should.equal pass
+			world.turnCounter.should.equal number_of_turns
 
 
 describe 'world fixtures:', ->
