@@ -1,3 +1,5 @@
+'use strict'
+
 Element = require './elements.coffee'
 Tile = require './tile.coffee'
 Person = require './person.coffee'
@@ -60,7 +62,6 @@ module.exports =
 		turn: (_that) ->
 			if _that? then _this = _that else _this = @
 			_this.turnCounter++
-			console.log _this.turnCounter
 
 		makeStage: () ->
 			@stage = []

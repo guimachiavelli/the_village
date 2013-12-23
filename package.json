@@ -4,11 +4,13 @@
   "private": true,
   "dependencies": {
     "mocha": "1.12.0",
-    "ejs": "~0.8.4",
     "sinon": "~1.7.3",
     "grunt": "~0.4.1",
     "grunt-contrib-coffee": "~0.7.0",
     "grunt-contrib-watch": "~0.5.1",
-    "grunt-mocha-cli": "~1.0.6"
+    "grunt-mocha-cli": "~1.0.6",
+    "jade": "~1.0.0",
+    "express": "~3.4.7",
+    "socket.io": "~0.9.16"
   }
 }
