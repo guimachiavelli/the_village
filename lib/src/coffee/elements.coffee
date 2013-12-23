@@ -1,7 +1,6 @@
-#teste
-#
+'use strict'
 
-module.exports = 
+module.exports =
 	class Element
 		constructor: (@world) ->
 		

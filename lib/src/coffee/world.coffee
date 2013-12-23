@@ -1,14 +1,6 @@
 'use strict'
 
-Element = require './elements.coffee'
-Tile = require './tile.coffee'
-Person = require './person.coffee'
-
-
-grass = new Tile 'grass', '.'
-shallow_water = new Tile 'water', '.', false
-deep_water = new Tile 'deep water', '.', true
-tree = new Tile 'tree', '&'
+tiles = require './tile.coffee'
 
 module.exports =
 
@@ -20,6 +12,7 @@ module.exports =
 			@turnCounter = 0
 			@matrix = []
 			@stage = []
+			@message = '1'
 
 			@init()
 
@@ -31,7 +24,7 @@ module.exports =
 			for row, i in @matrix
 				for [0...@width]
 					@matrix[i].push {
-						"tile" : grass,
+						"tile" : tiles.grass,
 						"person" : '',
 						"occupied" : false
 					}
@@ -44,9 +37,9 @@ module.exports =
 			while size >= 0
 				for column, c in @matrix[size]
 					if size - margin > 0
-						@matrix[size][c].tile = shallow_water
+						@matrix[size][c].tile = tiles.shallow_water
 					else
-						@matrix[size][c].tile = deep_water
+						@matrix[size][c].tile = tiles.deep_water
 				size--
 		
 
@@ -61,6 +54,11 @@ module.exports =
 		
 		turn: (_that) ->
 			if _that? then _this = _that else _this = @
+			for row in @matrix
+				for col in row
+					if col.person != ''
+						col.person.act()
+
 			_this.turnCounter++
 
 		makeStage: () ->

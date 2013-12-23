@@ -1,3 +1,5 @@
+'use strict'
+
 Element = require './elements.coffee'
 
 module.exports =
@@ -17,6 +19,8 @@ module.exports =
 			distance = 1 unless distance?
 
 			previous = @position.slice 0,2
+
+			@world.message = 'I am walking in ' + axis
 
 			switch axis
 				when 'y'
@@ -49,10 +53,11 @@ module.exports =
 				@world.matrix[previous[0]][previous[1]].occupied = false
 			
 			@addToGrid @position, @, 'person', true
+
 		
 
-		act: (test) ->
-			test = Math.floor(Math.random() * 4) if test == ''
+		act: () ->
+			test = Math.floor(Math.random() * 4)
 			switch test
 				when 0 then @move 'x','+'
 				when 1 then @move 'y','+'

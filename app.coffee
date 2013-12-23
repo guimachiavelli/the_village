@@ -29,7 +29,7 @@ app.use express.static(__dirname + '/public')
 
 io.sockets.on 'connection', (socket) ->
 	setInterval =>
-		socket.emit('turns passed', { turns: village.turnCounter })
+		socket.emit('turns passed', { turns: village.message })
 	, 1000
 
 	socket.on 'disconnect', () ->

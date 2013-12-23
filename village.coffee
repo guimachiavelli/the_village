@@ -1,7 +1,10 @@
 'use strict'
 
+Person = require './lib/src/coffee/person.coffee'
 World = require './lib/src/coffee/world.coffee'
 
-test = new World 'nashkel', 5, 5
 
-module.exports = test
+village = new World 'nashkel', 5, 5
+bass = new Person 'bass', [0, 0], '@', village
+
+module.exports = village

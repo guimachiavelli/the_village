@@ -1,8 +1,17 @@
+'use strict'
+
 Element = require './elements.coffee'
 
-module.exports = 
-	class Tile extends Element
-		constructor: (@name, @symbol, @deep) ->
+class Tile extends Element
+	constructor: (@name, @symbol, @deep) ->
+
+module.exports = {
+	grass: new Tile 'grass', '.'
+	shallow_water: new Tile 'water', '.', false
+	deep_water: new Tile 'deep water', '.', true
+	tree: new Tile 'tree', '&'
+}
+
 
 			#	class Water extends Tile
 			#		constructor: (@name, @symbol, @deep) ->
