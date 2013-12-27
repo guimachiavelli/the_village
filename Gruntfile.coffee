@@ -39,7 +39,7 @@ module.exports = (grunt) ->
 
 		watch: {
 			mocha: {
-				files: ['test/*.coffee']
+				files: ['test/*.coffee', 'lib/*.coffee']
 				tasks: ['test-watch', 'lint']
 			}
 		}
@@ -50,7 +50,7 @@ module.exports = (grunt) ->
 	}
 
 	grunt.registerTask 'default', 'Log some stuff.', ->
-		grunt.log.write('available tasks: test, watch')
+		grunt.log.write 'available tasks: test, watch, lint'
 
 
 	grunt.registerTask 'test', ['mochacli:single', 'coffeelint']

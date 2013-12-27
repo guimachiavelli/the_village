@@ -1,7 +1,7 @@
 'use strict'
 
-Person = require './lib/src/coffee/person.coffee'
-World = require './lib/src/coffee/world.coffee'
+Person = require './lib/person.coffee'
+World = require './lib/world.coffee'
 
 
 village = new World 'nashkel', 5, 5

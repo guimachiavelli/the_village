@@ -42,7 +42,6 @@ village.run(false)
 
 app.configure () ->
 	app.use express.favicon(__dirname + '/public/fav.png')
-	app.use(express.favicon())
 	app.use express.bodyParser()
 	app.engine 'jade', jade.__express
 	app.set 'view engine', 'jade'
