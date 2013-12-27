@@ -20,25 +20,25 @@ module.exports =
 
 			previous = @position.slice 0,2
 
-			@world.message = 'I am walking in ' + axis
+			@world.message.push @name + ': I am walking in ' + axis + '<br>'
 
 			switch axis
 				when 'y'
 					if direction is '+'
-							@position[0] = @position[0] + 1
+						@position[0] = @position[0] + 1
 					else if direction is '-'
-							@position[0] = @position[0] - 1
+						@position[0] = @position[0] - 1
 					else
-						throw 'invalid direction'
+						throw new Error 'invalid direction'
 				when 'x'
 					if direction is '+'
 						@position[1] = @position[1] + 1
 					else if direction is '-'
 						@position[1] = @position[1] - 1
 					else
-						throw 'invalid direction'
+						throw new Error 'invalid direction'
 				else
-					throw 'invalid axis'
+					throw new Error 'invalid axis'
 			
 
 			if @checkBounds(@position)? then @position = previous

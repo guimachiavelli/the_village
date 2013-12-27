@@ -10,7 +10,7 @@ module.exports =
 
 		
 		printElement: () ->
-			 return '<b class="' + @name + '">' + @symbol + '</b>'
+			return '<b class="' + @name + '">' + @symbol + '</b>'
 
 
 		checkBounds: (the_position) ->
@@ -35,18 +35,24 @@ module.exports =
 				column_length = @world.height
 				row_length = @world.width
 					
-				if x_max_length < row_length then around.push @world.matrix[y_current][x_max_length]
-				if x_min_length >= 0 then around.push @world.matrix[y_current][x_min_length]
+				if x_max_length < row_length
+					around.push @world.matrix[y_current][x_max_length]
+				if x_min_length >= 0
+					around.push @world.matrix[y_current][x_min_length]
 
 				if y_max_length < column_length
 					around.push @world.matrix[y_max_length][x_current].name
-					if x_max_length < row_length then around.push @world.matrix[y_max_length][x_max_length]
-					if x_min_length >= 0 then around.push @world.matrix[y_max_length][x_min_length]
+					if x_max_length < row_length
+						around.push @world.matrix[y_max_length][x_max_length]
+					if x_min_length >= 0
+						around.push @world.matrix[y_max_length][x_min_length]
 
 				if y_min_length >= 0
 					around.push @world.matrix[y_min_length][x_current].name
-					if x_max_length < row_length then around.push @world.matrix[y_min_length][x_max_length]
-					if x_min_length >= 0 then around.push @world.matrix[y_min_length][x_min_length]
+					if x_max_length < row_length
+						around.push @world.matrix[y_min_length][x_max_length]
+					if x_min_length >= 0
+						around.push @world.matrix[y_min_length][x_min_length]
 				
 				i++
 			return around
@@ -65,11 +71,15 @@ module.exports =
 				]
 				
 				if radius > 1
-					coord.push [position[0] + radius - i, position[1] + radius], [position[0] + radius, position[1] + radius - i], [position[0] + radius - i, position[1] - radius], [position[0] - radius, position[1] + radius - i]
+					coord.push(
+						[position[0] + radius - i, position[1] + radius],
+						[position[0] + radius, position[1] + radius - i],
+						[position[0] + radius - i, position[1] - radius],
+						[position[0] - radius, position[1] + radius - i])
 
 				for pos in coord
-					around.push @world.matrix[pos[0]][pos[1]] if @world.matrix[pos[0]]? and @world.matrix[pos[0]][pos[1]]?
-
+					if @world.matrix[pos[0]]? and @world.matrix[pos[0]][pos[1]]?
+						around.push @world.matrix[pos[0]][pos[1]]
 				radius--
 
 			return around
@@ -77,10 +87,3 @@ module.exports =
 
 		surroundings: (area) ->
 			@defineArea2 @position, area
-		
-	
-
-
-#root = exports ? window
-#root.Element = Element
-
