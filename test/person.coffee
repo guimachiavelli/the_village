@@ -1,3 +1,6 @@
+
+'use strict'
+
 chai = require 'chai'
 sinon = require 'sinon'
 
@@ -11,7 +14,7 @@ Tile = require '../lib/tile.coffee'
 Person = require '../lib/person.coffee'
 World = require '../lib/world.coffee'
 		
-describe 'persons', ->
+describe 'person: ', ->
 
 	it 'init() and constructor should add a character to the matrix', ->
 		world = new World 'world', 5, 5
@@ -25,27 +28,44 @@ describe 'persons', ->
 		char1 = new Person 'bass', [0, 0], '@', world
 
 		world.matrix[0][0].occupied.should.equal true
-	
-	it 'look() should return a view of their surroundings', ->
-		world = new World 'world', 10, 10
-		char1 = new Person 'bass', [4, 3], '@', world
-		char2 = new Person 'viola', [0, 3], '#', world
-		char3 = new Person 'piano', [0, 2], '$', world
 
-		char1.look()
-		char2.look()
-		char3.look()
+
+
+	describe 'look: ', ->
+
+		it 'should return a view of their surroundings', ->
+			world = new World 'world', 10, 10
+			char1 = new Person 'bass', [4, 3], '@', world
+			char2 = new Person 'viola', [0, 3], '#', world
+			char3 = new Person 'piano', [0, 2], '$', world
+
+			char1.look()
+			char2.look()
+			char3.look()
+			
+			char1.view.length.should.equal 12
+			char1.view[0].tile.name.should.equal 'grass'
+			char1.view.should.not.be.empty
+
+			char2.view.length.should.equal 9
 		
-		char1.view.length.should.equal 12
-		char1.view[0].tile.name.should.equal 'grass'
-		char1.view.should.not.be.empty
+			char3.view[6].person.name.should.equal 'viola'
 
-		char2.view.length.should.equal 9
-	
-		char3.view[6].person.name.should.equal 'viola'
+		it 'char1 should greet char2', ->
+			world = new World 'world', 10, 10
+			char1 = new Person 'bass', [1, 3], '@', world
+			char2 = new Person 'viola', [0, 3], '#', world
+
+			char1.act()
+
+			world.log.should.include char1.greeting + char2.name
+			
 
 	
-	describe 'move', ->
+	
+	
+	
+	describe 'move: ', ->
 
 		it 'should occupy and vacate positions when moving', ->
 			world = new World 'world', 5, 5

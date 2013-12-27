@@ -52,7 +52,7 @@ app.configure () ->
 
 io.sockets.on 'connection', (socket) ->
 	setInterval ->
-		socket.emit('turns passed', { turns: village.message })
+		socket.emit('turns passed', { turns: village.log })
 	, 1000
 
 	socket.on 'disconnect', () ->

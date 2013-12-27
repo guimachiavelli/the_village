@@ -1,26 +1,59 @@
+###########################################################################
+###### The Village – Person ###############################################
+#
+#
+# 	the person class contains the mold
+# 	from which each character will be constructed
+#
+# 	dependant on the element class
+#
+#
+###########################################################################
+###########################################################################
+
+
+
 'use strict'
 
 Element = require './elements.coffee'
 
 module.exports =
 	class Person extends Element
+		# the constructor takes a string for a name,
+		# an array of two integers as position
+		# a string with the symbol representing the character
+		# and the world instance to which the person instance belongs
 		constructor: (@name, @position, @symbol, @world) ->
+			# view receives an array with everything that's in a
+			# person's line of view when it uses the look method
 			@view = null
+
+			# hp represents the hit points of the person
+			# not used so far, but will eventually be used to determine
+			# whether someone lives or dies
+			@hp = 10
+
+			@greeting = 'Cheers, '
+
 			@init()
 
 		init: () ->
+			# for now, simply physically add a character to its world instance
 			@addToGrid @position, @, 'person', true
 
 		look: () ->
 			@view = @surroundings 2
 
 		move: (axis, direction, distance) ->
+			# the basic action, for now the default
 			
+			# default move is of 1 square
 			distance = 1 unless distance?
-
+			
+			# stores the current position
 			previous = @position.slice 0,2
 
-			@world.message.push @name + ': I am walking in ' + axis + '<br>'
+
 
 			switch axis
 				when 'y'
@@ -43,29 +76,46 @@ module.exports =
 
 			if @checkBounds(@position)? then @position = previous
 
+			# our characters can't swim, so they avoid deep water
 			if @world.matrix[@position[0]][@position[1]].tile.name is 'deep water'
 				@position = previous
 			
 			if @world.matrix[@position[0]][@position[1]].occupied is true
+				# if the position is marked as occupied, movement is not possible
 				@position = previous
 			else
+				# otherwise, clear the previous location
+				# and  frees the spot by setting occupied to false
 				@world.matrix[previous[0]][previous[1]].person = ''
 				@world.matrix[previous[0]][previous[1]].occupied = false
 			
+
+			#finally, add the character to its new spot
 			@addToGrid @position, @, 'person', true
 
+			#logs the movement
+			@world.log.push @name + ': I am walking in ' + axis
+
+		still: () ->
+			@world.log.push @name + 'wow. such useless. much nothing. amaze'
+
+		greet: (greeted) ->
+			@world.log.push @greeting + greeted
 		
 
 		act: () ->
-			test = Math.floor(Math.random() * 4)
+
+			@look()
+
+			for row in @view
+				if row.person instanceof Person
+					@greet row.person.name
+
+
+			test = Math.floor(Math.random() * 27)
 			switch test
 				when 0 then @move 'x','+'
 				when 1 then @move 'y','+'
 				when 2 then @move 'x','-'
 				when 3 then @move 'y','-'
-
-
-# for mocha testing
-# root = exports ? window
-# root.Person = Person
-
+				else @still

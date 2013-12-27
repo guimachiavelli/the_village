@@ -34,8 +34,8 @@ module.exports =
 			@matrix = []
 
 			# each time a character does something,
-			# it pushes a string into the messagea array
-			@message = []
+			# it pushes a string into the log array
+			@log = []
 
 			@init()
 		
@@ -78,21 +78,21 @@ module.exports =
 		run: (stop) ->
 			# run sets an interval making a turn pass in
 			# a set time interval dependend on the world's speed
-			_that = @
+			
 			if stop is false
-				running = setInterval () ->
-					_that.turn(_that)
+				running = setInterval () =>
+					@turn()
 				, @speed
 			else
 				clearInterval running
 		
-		turn: (_that) ->
+		turn: () ->
 			# turn increments the world's turn counter
 			# and makes each character act
-			if _that? then _this = _that else _this = @
+			
 			for row in @matrix
 				for col in row
 					if col.person instanceof Person
 						col.person.act()
 
-			_this.turnCounter++
+			@turnCounter++
