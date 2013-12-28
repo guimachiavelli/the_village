@@ -14,7 +14,7 @@
 
 tiles = require './tile.coffee'
 Person = require './person.coffee'
-event = require './events.coffee'
+Event = require './events.coffee'
 
 module.exports =
 
@@ -37,6 +37,8 @@ module.exports =
 			# each time a character does something,
 			# it pushes a string into the log array
 			@log = []
+
+			@event = new Event @
 
 			@init()
 
@@ -92,7 +94,7 @@ module.exports =
 			# turn increments the world's turn counter
 			# and makes each character act
 
-			event @turnCounter, @
+			@event.calendar @turnCounter
 
 			for row in @matrix
 				for col in row

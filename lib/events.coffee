@@ -17,15 +17,15 @@ Person = require './person.coffee'
 'use strict'
 
 module.exports =
-	event = (@trigger, @world) ->
+	class Event
 
-		if @trigger is 3
-			console.log 'tsunami'
-			for row in @world.matrix
-				for col in row
-					if col.person instanceof Person
-						col.person.hp -= 7
-						console.log col.person.hp
+		constructor: (@world) ->
 
-		else
-			console.log @trigger
+		calendar: (trigger)->
+
+			if trigger is 3
+				@tsunami()
+
+		tsunami: ->
+			@world.log.push 'wow. such water. very terror. amaze. so damage.'
+

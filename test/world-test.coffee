@@ -9,6 +9,7 @@ expect = chai.expect
 
 clock = sinon.useFakeTimers()
 
+
 Element = require '../lib/elements.coffee'
 Tile = require '../lib/tile.coffee'
 Person = require '../lib/person.coffee'
@@ -58,7 +59,7 @@ describe 'world structure:', ->
 			world.run(false)
 			clock.tick pass
 			world.run(true)
-
+			
 			world.turnCounter.should.equal number_of_turns
 
 
@@ -72,4 +73,3 @@ describe 'world fixtures:', ->
 		char1.move 'y', '-'
 		
 		char1.position.should.deep.equal [3,1]
-	
