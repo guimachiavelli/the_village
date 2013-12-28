@@ -109,6 +109,18 @@ describe 'person: ', ->
 			char1.position.should.deep.equal [0,0]
 			
 		
+		it 'should move only one step at a time', ->
+			world = new World 'world', 160, 160
+			char1 = new Person 'bass1', [0, 0], '@', world
+
+			i = 0
+			while i < 150
+				char1.move 'x', '+'
+				char1.move 'y', '+'
+				i++
+
+			char1.position.should.deep.equal [150, 150]
+			
 
 		describe 'direction and axis', ->
 			world = new World 'axis',6,5

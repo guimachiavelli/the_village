@@ -53,8 +53,6 @@ module.exports =
 			# stores the current position
 			previous = @position.slice 0,2
 
-
-
 			switch axis
 				when 'y'
 					if direction is '+'
