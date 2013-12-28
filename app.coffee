@@ -52,11 +52,12 @@ app.configure () ->
 	app.set 'view options', {layout: false}
 	app.use express.static(__dirname + '/public')
 
+io.set 'log level', 2
 
 io.sockets.on 'connection', (socket) ->
 	setInterval ->
 		socket.emit('turn passed', { log: village.log, stage: village.printMatrix() })
-	, 1000
+	, 1001
 
 	socket.on 'disconnect', () ->
 		io.sockets.emit 'user disconnected'
