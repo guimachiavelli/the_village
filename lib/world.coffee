@@ -14,6 +14,7 @@
 
 tiles = require './tile.coffee'
 Person = require './person.coffee'
+event = require './events.coffee'
 
 module.exports =
 
@@ -90,12 +91,14 @@ module.exports =
 		turn: () ->
 			# turn increments the world's turn counter
 			# and makes each character act
-			
+
+			event @turnCounter, @
+
 			for row in @matrix
 				for col in row
 					if col.person instanceof Person
 						col.person.act()
-
+			
 			@turnCounter++
 
 		printMatrix: ->
