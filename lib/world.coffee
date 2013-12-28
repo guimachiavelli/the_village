@@ -38,6 +38,7 @@ module.exports =
 			@log = []
 
 			@init()
+
 		
 		# used to set the time interval
 		speed: 1000
@@ -96,3 +97,16 @@ module.exports =
 						col.person.act()
 
 			@turnCounter++
+
+		printMatrix: ->
+			print = ''
+			for row in @matrix
+				for col in row
+					if col.person instanceof Person
+						print += col.person.symbol
+					else
+						print += col.tile.symbol
+				print += '<br>'
+			
+			return print
+

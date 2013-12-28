@@ -112,7 +112,7 @@ module.exports =
 					@greet row.person.name
 
 
-			test = Math.floor(Math.random() * 27)
+			test = Math.floor(Math.random() * 5)
 			switch test
 				when 0 then @move 'x','+'
 				when 1 then @move 'y','+'

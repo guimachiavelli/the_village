@@ -39,6 +39,9 @@ routes = require './routes/routes.coffee'
 village = require './village.coffee'
 village.run(false)
 
+matrix = village.matrix
+
+app.locals.world = village
 
 app.configure () ->
 	app.use express.favicon(__dirname + '/public/fav.png')
@@ -52,7 +55,7 @@ app.configure () ->
 
 io.sockets.on 'connection', (socket) ->
 	setInterval ->
-		socket.emit('turns passed', { turns: village.log })
+		socket.emit('turn passed', { log: village.log, stage: village.printMatrix() })
 	, 1000
 
 	socket.on 'disconnect', () ->
@@ -66,4 +69,3 @@ io.sockets.on 'connection', (socket) ->
 app.get '/', routes.getIndex
 
 
-app.locals.world = village
