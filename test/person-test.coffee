@@ -142,11 +142,14 @@ describe 'person: ', ->
 			world = new World 'axis',6,5
 			char1 = new Person 'bass', [0, 0], '@', world
 
-			char1.act('walk', ['x', '+', 10])
+			char1.act('walk', ['x', '+'], 4)
 			char1.act()
 			char1.act()
 			char1.act()
-
+			char1.act('still')
+			char1.act('still')
+			char1.act('still')
+			
 			char1.position.should.deep.equal [0, 4]
 			
 
