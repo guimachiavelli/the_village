@@ -35,6 +35,12 @@ module.exports =
 
 			@greeting = 'Cheers, '
 
+			@upcoming_action = null
+
+			@acting = false
+
+			@duration = 0
+
 			@init()
 
 		init: () ->
@@ -44,11 +50,21 @@ module.exports =
 		look: () ->
 			@view = @surroundings 2
 
-		move: (axis, direction, distance) ->
+		walk: (axis, direction, distance) ->
+
+			if distance > 0
+				@current_action = 'walk'
+				@move axis, direction
+			else
+				@upcoming_action = ''
+
+
+			@duration = distance - 1
+			
+
+		move: (axis, direction) ->
 			# the basic action, for now the default
 			
-			# default move is of 1 square
-			distance = 1 unless distance?
 			
 			# stores the current position
 			previous = @position.slice 0,2
@@ -101,19 +117,27 @@ module.exports =
 			@world.log.push @greeting + greeted
 		
 
-		act: () ->
+		act: (action, params) =>
+			if @[action]? or @upcoming_action?
+				
+				if @upcoming_action?
+					@[@upcoming_action.action] 'x', '+', @duration
+				else
+					@upcoming_action = { action: action, params: params }
+					@[@upcoming_action.action] @upcoming_action.params...
 
-			@look()
+			else
+				@look()
 
-			for row in @view
-				if row.person instanceof Person
-					@greet row.person.name
-
-
-			test = Math.floor(Math.random() * 5)
-			switch test
-				when 0 then @move 'x','+'
-				when 1 then @move 'y','+'
-				when 2 then @move 'x','-'
-				when 3 then @move 'y','-'
-				else @still
+				for row in @view
+					if row.person instanceof Person
+						@greet row.person.name
+				
+				if @acting is false
+					test = Math.floor(Math.random() * 5)
+					switch test
+						when 0 then @move 'x','+'
+						when 1 then @move 'y','+'
+						when 2 then @move 'x','-'
+						when 3 then @move 'y','-'
+						else @still

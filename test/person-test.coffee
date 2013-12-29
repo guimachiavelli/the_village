@@ -59,11 +59,6 @@ describe 'person: ', ->
 			char1.act()
 
 			world.log.should.include char1.greeting + char2.name
-			
-
-	
-	
-	
 	
 	describe 'move: ', ->
 
@@ -141,4 +136,17 @@ describe 'person: ', ->
 			it 'should move a character west', ->
 				char1.move('x', '-')
 				char1.position.should.deep.equal [0,0]
+
+	describe 'continuous action: ', ->
+		it 'walk should move a character', ->
+			world = new World 'axis',6,5
+			char1 = new Person 'bass', [0, 0], '@', world
+
+			char1.act('walk', ['x', '+', 10])
+			char1.act()
+			char1.act()
+			char1.act()
+
+			char1.position.should.deep.equal [0, 4]
+			
 
