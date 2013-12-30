@@ -16,6 +16,7 @@
 'use strict'
 
 Element = require './elements.coffee'
+BinaryHeap = require './binaryHeap.coffee'
 
 module.exports =
 	class Person extends Element
@@ -49,9 +50,6 @@ module.exports =
 			@view = @surroundings 2
 
 		walk: (axis, direction, distance) ->
-
-			
-
 			if distance > 0
 				@current_action = 'walk'
 				@move axis, direction
@@ -116,7 +114,6 @@ module.exports =
 		greet: (greeted) ->
 			@world.log.push @greeting + greeted
 		
-
 		act: (action, params, duration) =>
 			if @[action]? or @upcoming_action?
 				
@@ -130,6 +127,7 @@ module.exports =
 					@[@upcoming_action.action] @upcoming_action.params..., duration
 
 			else
+
 				@look()
 
 				for row in @view
