@@ -117,7 +117,7 @@ module.exports =
 
 		moveTo: (coordinates) ->
 			test = pathfinder.search @world.matrix, @position, coordinates
-			console.log 'path test: ' + test.length
+			console.log 'path test: ' + test[0].parent.parent.parent.parent.y
 
 		
 		act: (action, params, duration) =>
