@@ -16,7 +16,8 @@
 'use strict'
 
 Element = require './elements.coffee'
-BinaryHeap = require './binaryHeap.coffee'
+pathfinder = require './astar.coffee'
+
 
 module.exports =
 	class Person extends Element
@@ -113,6 +114,11 @@ module.exports =
 
 		greet: (greeted) ->
 			@world.log.push @greeting + greeted
+
+		moveTo: (coordinates) ->
+			test = pathfinder.search @world.matrix, @position, coordinates
+			console.log 'path test: ' + test.length
+
 		
 		act: (action, params, duration) =>
 			if @[action]? or @upcoming_action?

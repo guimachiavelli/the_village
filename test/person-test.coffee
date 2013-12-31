@@ -152,4 +152,12 @@ describe 'person: ', ->
 			
 			char1.position.should.deep.equal [0, 4]
 			
+	
+		it 'moveTo should move a person to a location, one step each turn', ->
+			world = new World 'axis', 6, 5
+			char1 = new Person 'bass', [0, 0], '@', world
+
+			char1.moveTo([4,2])
+			
+			char1.position.should.deep.equal [4, 2]
 
