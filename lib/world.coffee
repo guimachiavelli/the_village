@@ -99,6 +99,13 @@ module.exports =
 			for row in @matrix
 				for col in row
 					if col.person instanceof Person
+						col.person.acted = false
+
+
+			for row in @matrix
+				for col in row
+					if col.person instanceof Person && col.person.acted isnt true
+						col.person.acted = true
 						col.person.act()
 			
 			@turnCounter++

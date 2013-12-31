@@ -137,6 +137,39 @@ describe 'person: ', ->
 				char1.move('x', '-')
 				char1.position.should.deep.equal [0,0]
 
+	describe 'moveTo: ', ->
+		it 'should instantly move a person to a location', ->
+			world = new World 'axis', 6, 5
+			char1 = new Person 'bass', [0, 0], '@', world
+
+			char1.moveTo([4,2])
+			
+			char1.position.should.deep.equal [4, 2]
+
+		it 'should throw an error if desired location does not exist', ->
+			world = new World 'axis', 6, 5
+			char1 = new Person 'bass', [0, 0], '@', world
+
+			(-> char1.moveTo([14,2])).should.throw 'this location does not exist'
+
+	describe 'moveToTarget: ', ->
+		it 'should move a person to a location turn by turn', ->
+			world = new World 'axis', 6, 5
+			char1 = new Person 'bass', [0, 0], '@', world
+
+			char1.moveToTarget([4,2])
+
+			world.turn()
+			world.turn()
+			world.turn()
+			world.turn()
+			world.turn()
+			world.turn()
+
+			
+			char1.position.should.deep.equal [4, 2]
+
+
 	describe 'continuous action: ', ->
 		it 'walk should move a character', ->
 			world = new World 'axis',6,5
@@ -153,11 +186,4 @@ describe 'person: ', ->
 			char1.position.should.deep.equal [0, 4]
 			
 	
-		it 'moveTo should move a person to a location, one step each turn', ->
-			world = new World 'axis', 6, 5
-			char1 = new Person 'bass', [0, 0], '@', world
-
-			char1.moveTo([4,2])
-			
-			#char1.position.should.deep.equal [4, 2]
 

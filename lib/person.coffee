@@ -39,6 +39,12 @@ module.exports =
 
 			@upcoming_action = null
 
+			@next_move = null
+
+			@action_queue = []
+			
+			@acted = false
+
 			@duration = 0
 
 			@init()
@@ -111,9 +117,30 @@ module.exports =
 				@upcoming_action = null
 			
 
-		moveTo: (coordinates) ->
-			test = new Pathfinder @world.matrix, @position, coordinates
-			console.log 'path test: ' + test[0]
+		moveToTarget: (target_pos) ->
+			path = new Pathfinder @world.matrix, @position, target_pos
+			for step in path
+				@action_queue.push { action: 'moveTo', params: step }
+			
+
+		moveTo: (pos) ->
+			console.log 'params received:' + pos
+			if @world.matrix[pos[1]][pos[0]]?
+				# stores the current position
+				previous = @position.slice 0,2
+
+				# otherwise, clear the previous location
+				# and  frees the spot by setting occupied to false
+				@world.matrix[previous[0]][previous[1]].person = ''
+				@world.matrix[previous[0]][previous[1]].occupied = false
+				
+				@position = pos
+
+				#finally, add the character to its new spot
+				@addToGrid @position, @, 'person', true
+			else
+				throw new Error 'this location does not exist'
+
 
 		still: () ->
 			@world.log.push @name + 'wow. such useless. much nothing. amaze'
@@ -123,11 +150,19 @@ module.exports =
 
 
 		
-		act: (action, params, duration) =>
-			if @[action]? or @upcoming_action?
+		act: (action, params, duration) ->
+
+			if @action_queue.length > 0
+				the_action = @action_queue.splice(0,1)
+				the_action = the_action[0]
+				@[the_action.action] the_action.params
+				console.log 'params sent:' + the_action.params
+
+			else if @[action]? or @upcoming_action?
 				
 				duration = 0 unless duration?
 				params = [] unless params?
+
 
 				if @upcoming_action?
 					@[@upcoming_action.action] @upcoming_action.params..., @duration
@@ -136,7 +171,6 @@ module.exports =
 					@[@upcoming_action.action] @upcoming_action.params..., duration
 
 			else
-
 				@look()
 
 				for row in @view
