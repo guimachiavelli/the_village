@@ -88,11 +88,13 @@ module.exports =
 				if currentNode is endNode
 					curr = currentNode
 					ret = []
+					
 
 					while curr.parent
 						ret.push curr
 						curr = curr.parent
-						return ret.reverse()
+
+					return ret.reverse()
 
 				# Normal case: move currentNode from open
 				# to closed, process each of its neighbours
@@ -105,7 +107,6 @@ module.exports =
 				neighbours_len = neighbours.length
 
 				while i < neighbours_len
-					console.log i
 					neighbour = neighbours[i]
 					i++
 
