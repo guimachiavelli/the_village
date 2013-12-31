@@ -16,7 +16,7 @@
 'use strict'
 
 Element = require './elements.coffee'
-pathfinder = require './astar.coffee'
+Pathfinder = require './pathfinder.coffee'
 
 
 module.exports =
@@ -50,14 +50,6 @@ module.exports =
 		look: () ->
 			@view = @surroundings 2
 
-		walk: (axis, direction, distance) ->
-			if distance > 0
-				@current_action = 'walk'
-				@move axis, direction
-				@duration = distance - 1
-			else
-				@upcoming_action = null
-			
 			
 			
 
@@ -109,15 +101,26 @@ module.exports =
 			#logs the movement
 			@world.log.push @name + ': I am walking in ' + axis
 
+
+		walk: (axis, direction, distance) ->
+			if distance > 0
+				@current_action = 'walk'
+				@move axis, direction
+				@duration = distance - 1
+			else
+				@upcoming_action = null
+			
+
+		moveTo: (coordinates) ->
+			test = new Pathfinder @world.matrix, @position, coordinates
+			console.log 'path test: ' + test[0]
+
 		still: () ->
 			@world.log.push @name + 'wow. such useless. much nothing. amaze'
 
 		greet: (greeted) ->
 			@world.log.push @greeting + greeted
 
-		moveTo: (coordinates) ->
-			test = pathfinder.search @world.matrix, @position, coordinates
-			console.log 'path test: ' + test.length
 
 		
 		act: (action, params, duration) =>
