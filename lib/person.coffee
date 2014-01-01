@@ -110,7 +110,7 @@ module.exports =
 
 		walk: (axis, direction, distance) ->
 			i = 0
-			while i <= distance
+			while i < distance
 				@action_queue.push {action: 'move', params: [axis, direction]}
 				i++
 
@@ -139,32 +139,44 @@ module.exports =
 				throw new Error 'this location does not exist'
 
 
-		still: () ->
+		still: ->
 			@world.log.push @name + 'wow. such useless. much nothing. amaze'
 
 		greet: (greeted) ->
 			@world.log.push @greeting + greeted
 
-
 		
-		act: (action, params, duration) ->
+		act: (action, params) ->
+			if action? and params?
+				@[action] params...
+
+			else
+				action = null
+				params = null
+				rand = Math.floor(Math.random() * 5)
+
+				switch rand
+					when 0
+						action = 'move'
+						params = ['x','+']
+					when 1
+						action = 'move'
+						params = ['y','+']
+					when 2
+						action = 'move'
+						params = ['x','-']
+					when 3
+						action = 'move'
+						params = ['y','-']
+
+					else
+						action = 'still'
+						params = []
+
+				@action_queue.push { action, params }
 
 			if @action_queue.length > 0
 				the_action = @action_queue.splice(0,1)
 				the_action = the_action[0]
 				@[the_action.action] the_action.params...
 
-			else
-				@look()
-
-				for row in @view
-					if row.person instanceof Person
-						@greet row.person.name
-							
-				test = Math.floor(Math.random() * 5)
-				switch test
-					when 0 then @move 'x','+'
-					when 1 then @move 'y','+'
-					when 2 then @move 'x','-'
-					when 3 then @move 'y','-'
-					else @still
