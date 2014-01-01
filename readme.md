@@ -17,10 +17,10 @@ this is also a bit of a formal exercise, trying to keep frameworks, libraries an
 
 More to come here, but, for now, as a quick description:
 
-* lib/: contains all the code related to the actual "village", from basic elements to pathfinding logic
-* test/: contains all the tests for the logic of the village, from world creation to event handling to the character's actions. all tests use mocha/chai.
-* routes/: contains all the routing, which is quite basic at this time, and, I imagine, will not grow on complexity that much
-* views/: templates, for now just a basic index page to keep an eye on things I can't monitor that well with tests right now
-* public/: public files, such as images, css and js files
-* village.coffee: responsible for getting all the dependencies and creating the actual village
-* app.coffee: server config and startup, also bootstraps the village process
+* **lib/**: contains all the code related to the actual "village", from basic elements to pathfinding logic
+* **test/**: contains all the tests for the logic of the village, from world creation to event handling to the character's actions. all tests use mocha/chai.
+* **routes/**: contains all the routing, which is quite basic at this time, and, I imagine, will not grow on complexity that much
+* **views/**: templates, for now just a basic index page to keep an eye on things I can't monitor that well with tests right now
+* **public/**: public files, such as images, css and js files
+* **village.coffee**: responsible for getting all the dependencies and creating the actual village
+* **app.coffee**: server config and startup, also bootstraps the village process
