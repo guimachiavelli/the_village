@@ -109,23 +109,20 @@ module.exports =
 
 
 		walk: (axis, direction, distance) ->
-			if distance > 0
-				@current_action = 'walk'
-				@move axis, direction
-				@duration = distance - 1
-			else
-				@upcoming_action = null
-			
+			i = 0
+			while i <= distance
+				@action_queue.push {action: 'move', params: [axis, direction]}
+				i++
 
 		moveToTarget: (target_pos) ->
 			path = new Pathfinder @world.matrix, @position, target_pos
 			for step in path
-				@action_queue.push { action: 'moveTo', params: step }
+				@action_queue.push { action: 'moveTo', params: [step] }
 			
 
 		moveTo: (pos) ->
-			console.log 'params received:' + pos
-			if @world.matrix[pos[1]][pos[0]]?
+			if @world.matrix[pos[1]][pos[0]]? and
+			@world.matrix[pos[1]][pos[0]].occupied isnt true
 				# stores the current position
 				previous = @position.slice 0,2
 
@@ -155,20 +152,7 @@ module.exports =
 			if @action_queue.length > 0
 				the_action = @action_queue.splice(0,1)
 				the_action = the_action[0]
-				@[the_action.action] the_action.params
-				console.log 'params sent:' + the_action.params
-
-			else if @[action]? or @upcoming_action?
-				
-				duration = 0 unless duration?
-				params = [] unless params?
-
-
-				if @upcoming_action?
-					@[@upcoming_action.action] @upcoming_action.params..., @duration
-				else
-					@upcoming_action = { action: action, params: params }
-					@[@upcoming_action.action] @upcoming_action.params..., duration
+				@[the_action.action] the_action.params...
 
 			else
 				@look()

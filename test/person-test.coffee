@@ -175,13 +175,12 @@ describe 'person: ', ->
 			world = new World 'axis',6,5
 			char1 = new Person 'bass', [0, 0], '@', world
 
-			char1.act('walk', ['x', '+'], 4)
-			char1.act()
-			char1.act()
-			char1.act()
-			char1.act('still')
-			char1.act('still')
-			char1.act('still')
+			char1.walk('x', '+', 4)
+
+			world.turn()
+			world.turn()
+			world.turn()
+			world.turn()
 			
 			char1.position.should.deep.equal [0, 4]
 			
