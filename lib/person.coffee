@@ -37,9 +37,6 @@ module.exports =
 
 			@greeting = 'Cheers, '
 
-			@upcoming_action = null
-
-			@next_move = null
 
 			@action_queue = []
 			
@@ -49,9 +46,16 @@ module.exports =
 
 			@init()
 
+
 		init: () ->
 			# for now, simply physically add a character to its world instance
 			@addToGrid @position, @, 'person', true
+
+		##############################
+		#
+		# Actions
+		#
+		##############################
 
 		look: () ->
 			@view = @surroundings 2
@@ -60,8 +64,6 @@ module.exports =
 			
 
 		move: (axis, direction) ->
-			# the basic action, for now the default
-			
 			
 			# stores the current position
 			previous = @position.slice 0,2
@@ -145,8 +147,7 @@ module.exports =
 		greet: (greeted) ->
 			@world.log.push @greeting + greeted
 
-		
-		act: (action, params) ->
+		plan: (action, params) ->
 			if action? and params?
 				@[action] params...
 
@@ -174,6 +175,11 @@ module.exports =
 						params = []
 
 				@action_queue.push { action, params }
+
+
+		
+		act: (action, params) ->
+			@plan(action, params)
 
 			if @action_queue.length > 0
 				the_action = @action_queue.splice(0,1)
