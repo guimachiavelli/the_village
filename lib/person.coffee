@@ -179,7 +179,7 @@ module.exports =
 
 		
 		act: (action, params) ->
-			@plan(action, params)
+			@plan action, params
 
 			if @action_queue.length > 0
 				the_action = @action_queue.splice(0,1)

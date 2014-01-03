@@ -11,10 +11,10 @@
 ###########################################################################
 ###########################################################################
 
+'use strict'
 
 Person = require './person.coffee'
-
-'use strict'
+utils = require './utils.coffee'
 
 module.exports =
 	class Event
