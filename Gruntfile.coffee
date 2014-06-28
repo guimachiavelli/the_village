@@ -1,9 +1,9 @@
 module.exports = (grunt) ->
 
-	grunt.initConfig {
-		mochacli: {
+	grunt.initConfig
+		mochacli:
 			options: {
-				compilers: ['coffee:coffee-script']
+				compilers: ['coffee:coffee-script/register']
 				files: 'test/*.coffee'
 			}
 
@@ -18,47 +18,20 @@ module.exports = (grunt) ->
 					reporter: 'min'
 				}
 			}
-		}
 
-		coffeelint: {
-			files: 'lib/*.coffee', 'test/*.coffee'
-
-			options: {
-				force: true
-				indentation: {
-					name: 'indentation'
-					value: 1
-					level: 'error'
-				}
-				no_tabs: {
-					name: 'no_tabs'
-					level: 'ignore'
-				}
-      		}
-    	}
-
-		watch: {
+		watch:
 			mocha: {
 				files: ['test/*.coffee', 'lib/*.coffee']
 				tasks: ['test-watch', 'lint']
 			}
-		}
-		
-
-
-
-	}
 
 	grunt.registerTask 'default', 'Log some stuff.', ->
-		grunt.log.write 'available tasks: test, watch, lint'
+		grunt.log.write 'available tasks: test, watch'
 
 
-	grunt.registerTask 'test', ['mochacli:single', 'coffeelint']
+	grunt.registerTask 'test', ['mochacli:single']
 	grunt.registerTask 'test-watch', ['mochacli:watching']
-	grunt.registerTask 'lint', ['coffeelint']
 
 	grunt.loadNpmTasks 'grunt-contrib-coffee'
 	grunt.loadNpmTasks 'grunt-mocha-cli'
 	grunt.loadNpmTasks 'grunt-contrib-watch'
-	grunt.loadNpmTasks 'grunt-coffeelint'
-
