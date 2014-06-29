@@ -10,7 +10,7 @@
 ## 		world: the main container that sets rules such as size and flow of time
 #
 ## 		elements: class gathering actions and helper functions
-##   	common to persons, tiles abd buildings
+##   	common to persons, tiles and buildings
 #
 ## 		person: the character class
 #
@@ -51,7 +51,7 @@ app.set 'views', __dirname + '/views'
 app.set 'view options', {layout: false}
 app.use express.static(__dirname + '/public')
 
-io.set 'log level', 2
+#io.set 'log level', 2
 
 io.sockets.on 'connection', (socket) ->
 	setInterval ->

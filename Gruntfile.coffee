@@ -4,7 +4,8 @@ module.exports = (grunt) ->
 		mochacli:
 			options: {
 				compilers: ['coffee:coffee-script/register']
-				files: 'test/*.coffee'
+				files: 'test/*.coffee',
+				'check-leaks':  true
 			}
 
 			single: {
@@ -22,7 +23,7 @@ module.exports = (grunt) ->
 		watch:
 			mocha: {
 				files: ['test/*.coffee', 'lib/*.coffee']
-				tasks: ['test-watch', 'lint']
+				tasks: ['mochacli:watching']
 			}
 
 	grunt.registerTask 'default', 'Log some stuff.', ->
@@ -30,7 +31,6 @@ module.exports = (grunt) ->
 
 
 	grunt.registerTask 'test', ['mochacli:single']
-	grunt.registerTask 'test-watch', ['mochacli:watching']
 
 	grunt.loadNpmTasks 'grunt-contrib-coffee'
 	grunt.loadNpmTasks 'grunt-mocha-cli'

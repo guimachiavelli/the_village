@@ -60,8 +60,6 @@ module.exports =
 		look: () ->
 			@view = @surroundings 2
 
-			
-			
 
 		move: (axis, direction) ->
 			
@@ -142,7 +140,7 @@ module.exports =
 
 
 		still: ->
-			@world.log.push @name + 'wow. such useless. much nothing. amaze'
+			@world.log.push @name + ' stops to ponder life\'s deepest meanings'
 
 		greet: (greeted) ->
 			@world.log.push @greeting + greeted
@@ -177,7 +175,6 @@ module.exports =
 				@action_queue.push { action, params }
 
 
-		
 		act: (action, params) ->
 			@plan action, params
 
